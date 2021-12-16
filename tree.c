@@ -26,13 +26,18 @@ TreeNode* tree_insert(TreeNode* tree, void* data, int (*cmpd)(void*,void*)){
   if(data == NULL)
     return tree;
   //Do not insert if data is already in tree
-  if((*cmpd)(tree->data,data) == 0)
+  if((*cmpd)(tree->data,data) == 0){
     return tree;
+  }
   //Induction:
-  if((*cmpd)(data,tree->data) < 0)  //if data is less than current node, insert to left
-    return tree_insert(tree->left, data, cmpd);
-  else  //if data is greater than current node, insert to right
-    return tree_insert(tree->right, data, cmpd);
+  if((*cmpd)(data,tree->data) < 0){  //if data is less than current node, insert to left
+    tree->left = tree_insert(tree->left, data, cmpd);
+    return tree;
+  }
+  else{  //if data is greater than current node, insert to right
+    tree->right = tree_insert(tree->right, data, cmpd);
+    return tree;
+  }
 }
 
 /* Search for TreeNode with exact match with "data" and return it
@@ -41,10 +46,12 @@ TreeNode* tree_insert(TreeNode* tree, void* data, int (*cmpd)(void*,void*)){
 */
 TreeNode* tree_getNode(TreeNode* tree, void* data, int (*cmpd)(void*,void*)){
   //Base Case:
-  if((*cmpd)(tree->data,data) == 0)  //if current node match, return it
-    return tree;
   if(tree == NULL)  //if current node is NULL, data is not found
     return NULL;
+
+  if((*cmpd)(tree->data,data) == 0)  //if current node match, return it
+    return tree;
+
   //Induction:
   if((*cmpd)(data,tree->data) < 0)
     return tree_getNode(tree->left, data, cmpd);
@@ -54,9 +61,9 @@ TreeNode* tree_getNode(TreeNode* tree, void* data, int (*cmpd)(void*,void*)){
 
 /* Frees the given tree
 */
-TreeNode* tree_freeTree(TreeNode* tree){
+void tree_freeTree(TreeNode* tree){
   if(tree == NULL)
-    return
+    return;
   tree_freeTree(tree->left);
   tree_freeTree(tree->right);
   free(tree->data);
@@ -67,7 +74,7 @@ TreeNode* tree_freeTree(TreeNode* tree){
 *  printing mechanism of each node's data field is defined by
 *  function *dtos, which the USER NEEDS TO DEFINE
 */
-void tree_printPreorder(TreeNode* tree, *FILE dst, char* (*dtos)(void*)){
+void tree_printPreorder(TreeNode* tree, FILE* dst, char* (*dtos)(void*)){
   if(tree == NULL)
     return;
   char* curprt = (*dtos)(tree->data);
@@ -81,7 +88,7 @@ void tree_printPreorder(TreeNode* tree, *FILE dst, char* (*dtos)(void*)){
 *  printing mechanism of each node's data field is defined by
 *  function *dtos, which the USER NEEDS TO DEFINE
 */
-void tree_printInorder(TreeNode* tree, *FILE dst, char* (*dtos)(void*)){
+void tree_printInorder(TreeNode* tree, FILE* dst, char* (*dtos)(void*)){
   if(tree == NULL)
     return;
   tree_printPreorder(tree->left, dst, dtos);
@@ -95,7 +102,7 @@ void tree_printInorder(TreeNode* tree, *FILE dst, char* (*dtos)(void*)){
 *  printing mechanism of each node's data field is defined by
 *  function *dtos, which the USER NEEDS TO DEFINE
 */
-void tree_printPostorder(TreeNode* tree, *FILE dst, char* (*dtos)(void*)){
+void tree_printPostorder(TreeNode* tree, FILE* dst, char* (*dtos)(void*)){
   if(tree == NULL)
     return;
   tree_printPreorder(tree->left, dst, dtos);
@@ -104,3 +111,55 @@ void tree_printPostorder(TreeNode* tree, *FILE dst, char* (*dtos)(void*)){
   fprintf(dst, "%s\n", curprt);
   free(curprt);
 }
+
+/*
+*/
+static void rcsv_prtTree(TreeNode* tree, FILE* dst, char* (*dtos)(void*)){
+  if(tree == NULL)
+    return;
+
+  //Print current node
+  char* curprt = (*dtos)(tree->data);
+  fprintf(dst, "N: %s; ",curprt);
+  free(curprt);
+  //Print left node (if any)
+  if(tree->left != NULL){
+    curprt = (*dtos)(tree->left->data);
+    fprintf(dst, "L: %s; ",curprt);
+    free(curprt);
+  }
+  //Print right node (if any)
+  if(tree->right != NULL){
+    curprt = (*dtos)(tree->right->data);
+    fprintf(dst, "R: %s; ",curprt);
+    free(curprt);
+  }
+
+  fprintf(dst,"\n");
+  //Repeat process with L & R node
+  rcsv_prtTree(tree->left, dst, dtos);
+  rcsv_prtTree(tree->right, dst, dtos);
+}
+
+/*
+*/
+void tree_printTree(TreeNode* tree, FILE* dst, char* (*dtos)(void*)){
+  fprintf(dst, "Tree = [\n");
+  rcsv_prtTree(tree, dst, dtos);
+  fprintf(dst, "]\n");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
