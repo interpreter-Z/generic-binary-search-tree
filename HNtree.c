@@ -110,6 +110,21 @@ void fprintHNT(FILE* dst, TreeNode* hnt){
 	free(route);
 }
 
+//prints HNtree "hnt" to filestream "dst" in pre-order 
+//format: lb:fr. ONLY leaves are printed
+void fprintHNT_fr(FILE* dst, TreeNode* hnt){
+	//stop upon reaching end of tree
+	if(hnt == NULL)
+		return;
 
+	//print hnt if it is leaf
+	if(tree_isleaf(hnt)){
+		fprintHN(dst, (HuffNode*)(hnt->data));
+		return;
+	}
 
+	//print rest of tree
+	fprintHNT_fr(dst, hnt->left);
+	fprintHNT_fr(dst, hnt->right);
+}
 

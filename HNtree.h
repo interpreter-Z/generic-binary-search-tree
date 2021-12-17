@@ -10,3 +10,4 @@ HuffNode valOf(TreeNode* hnt);
 int cmpHNT(void* hnt1, void* hnt2);
 TreeNode* mergeHNT(TreeNode* hnt1, TreeNode* hnt2);
 void fprintHNT(FILE* dst, TreeNode* hnt);
+void fprintHNT_fr(FILE* dst, TreeNode* hnt);
