@@ -1,5 +1,5 @@
 #include "tree.h"
-#include "../HuffNode/HuffNode.h"
+#include "HuffNode/HuffNode.h"
 
 //Interface
 TreeNode* HNtree_cons(int lb, long fr);

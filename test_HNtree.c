@@ -25,7 +25,10 @@ int main(){
 
 	TreeNode* hnt123 = mergeHNT(hnt13, hnt2);
         HNtree_printTree(hnt123, stdout);
-	fprintHNT(stdout, hnt123);
+	
+	//test fprintHNT
+	printf("---TEST fprintHNT---\n");
+        fprintHNT(stdout, hnt123);
 
 	//test compare
 	printf("---Test Compare---\n");

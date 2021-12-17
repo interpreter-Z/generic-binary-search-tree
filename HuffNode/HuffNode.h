@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#define ASCII_SIZE 256
+
 typedef struct HuffNode{
 	int  lb;  //label (in this case ASCII code) carried by HuffNode
 	long fr;  //frequency of ch occurance (this is true only for LEAF HuffNodes)

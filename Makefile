@@ -4,7 +4,7 @@ GCC = gcc -std=c99 -g $(WARNING) $(ERROR) $(TFLAGS)
 VALGRIND = valgrind --tool=memcheck --leak-check=yes --verbose
 
 EXEC = test_HNtree
-SRCS = tree.c test_HNtree.c HNtree.c ../HuffNode/HuffNode.c
+SRCS = tree.c test_HNtree.c HNtree.c HuffNode/HuffNode.c
 OBJS = $(SRCS:%.c=%.o)
 
 runtest: $(EXEC)
@@ -20,3 +20,4 @@ clean:
 	rm -f $(EXEC) *.o
 	rm -rf outputs
 	rm -rf memchecks
+	rm HuffNode/*.o

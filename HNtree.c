@@ -77,22 +77,38 @@ TreeNode* mergeHNT(TreeNode* hnt1, TreeNode* hnt2){
 	return root;
 }
 
-//[UNFINISHED !!!]
 // Prints HNtree "hnt" to file stream "dst" in pre-order traversal
 // format: lb:route. ONLY leaves are printed
-void fprintHNT(FILE* dst, TreeNode* hnt){
+static void rcsv_fprintHNT(FILE* dst, TreeNode* hnt, char* route, int len){
 	//Base: do nothing if tree is NULL
 	if(hnt == NULL)
 		return;
 
-	//Preorder: print current tree if it is leaf
-	if(tree_isleaf(hnt))
-		fprintHN(dst, (HuffNode*)(hnt->data));
-	fprintHNT(dst, hnt->left);
-	fprintHNT(dst, hnt->right);
+	//Base: if hnt is leaf, terminate route & print hnt->data (in format lb:route)
+	if(tree_isleaf(hnt)){
+		route[len] = '\0';
+		fprintf(dst, "%c:%s\n", (char)(valOf(hnt).lb), route);
+		return;
+	}
+
+	//Induction: print left
+	route[len] = '0';
+	rcsv_fprintHNT(dst, hnt->left, route, len+1);
+	//Induction: print right
+	route[len] = '1';
+	rcsv_fprintHNT(dst, hnt->right, route, len+1);
+
 }
 
+void fprintHNT(FILE* dst, TreeNode* hnt){
+	//allocate path string (of 1s & 0s)
+	//max possible depth is amount of ASCII characters existing
+	char* route = malloc(sizeof(char) * ASCII_SIZE);
+	int len = 0;
 
+	rcsv_fprintHNT(dst, hnt, route, len);
+	free(route);
+}
 
 
 
