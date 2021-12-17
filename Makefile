@@ -3,8 +3,8 @@ ERROR = -Wvla -Werror
 GCC = gcc -std=c99 -g $(WARNING) $(ERROR) $(TFLAGS) 
 VALGRIND = valgrind --tool=memcheck --leak-check=yes --verbose
 
-EXEC = test_tree
-SRCS = tree.c test_tree.c ftree.c
+EXEC = test_HNtree
+SRCS = tree.c test_HNtree.c HNtree.c ../HuffNode/HuffNode.c
 OBJS = $(SRCS:%.c=%.o)
 
 runtest: $(EXEC)

@@ -12,7 +12,7 @@ void HNtree_printTree(TreeNode* tree, FILE* dst){
 }
 
 // Returns a copy of the HuffNode held by hnt->data
-HuffNode* valOf(TreeNode* hnt){
+HuffNode valOf(TreeNode* hnt){
 	return *( (HuffNode*)(hnt->data) );
 }
 
@@ -73,11 +73,23 @@ TreeNode* mergeHNT(TreeNode* hnt1, TreeNode* hnt2){
 		root->left  = hnt2;
 		root->right = hnt1;
 	}
+
+	return root;
 }
 
+//[UNFINISHED !!!]
 // Prints HNtree "hnt" to file stream "dst" in pre-order traversal
+// format: lb:route. ONLY leaves are printed
 void fprintHNT(FILE* dst, TreeNode* hnt){
-	tree_printPreorder(hnt, dst, HNtoString);
+	//Base: do nothing if tree is NULL
+	if(hnt == NULL)
+		return;
+
+	//Preorder: print current tree if it is leaf
+	if(tree_isleaf(hnt))
+		fprintHN(dst, (HuffNode*)(hnt->data));
+	fprintHNT(dst, hnt->left);
+	fprintHNT(dst, hnt->right);
 }
 
 
