@@ -31,12 +31,15 @@ int main(){
 	printf("---Test get---\n");
 	TreeNode* grabbed = ftree_getNode(tr, 22.33);
 	printf("grabbing 22.33: %f\n", ftree_valOf(grabbed));
+	printf("Is it a leaf? %d\n", tree_isleaf(grabbed));
 
-	grabbed = ftree_getNode(tr, 12.34);
-        printf("grabbing 12.34: %f\n", ftree_valOf(grabbed));
+	grabbed = ftree_getNode(tr, 11.11);
+        printf("grabbing 11.11: %f\n", ftree_valOf(grabbed));
+	printf("Is it a leaf? %d\n", tree_isleaf(grabbed));
 
 	grabbed = ftree_getNode(tr, 55.55);
         printf("grabbing 55.55: ...is NULL? %d\n", grabbed==NULL);
+	printf("Is it a leaf? %d\n", tree_isleaf(grabbed));
 
 	//test free
 	tree_freeTree(tr);

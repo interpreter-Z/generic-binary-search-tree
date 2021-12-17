@@ -112,7 +112,7 @@ void tree_printPostorder(TreeNode* tree, FILE* dst, char* (*dtos)(void*)){
   free(curprt);
 }
 
-/*
+/* Print the tree in elaborate format for debugging
 */
 static void rcsv_prtTree(TreeNode* tree, FILE* dst, char* (*dtos)(void*)){
   if(tree == NULL)
@@ -141,7 +141,7 @@ static void rcsv_prtTree(TreeNode* tree, FILE* dst, char* (*dtos)(void*)){
   rcsv_prtTree(tree->right, dst, dtos);
 }
 
-/*
+/* Print the tree in elaborate format for debugging
 */
 void tree_printTree(TreeNode* tree, FILE* dst, char* (*dtos)(void*)){
   fprintf(dst, "Tree = [\n");
@@ -150,7 +150,15 @@ void tree_printTree(TreeNode* tree, FILE* dst, char* (*dtos)(void*)){
 }
 
 
-
+/* returns true if "tree" has no left or right children
+*/
+bool tree_isleaf(TreeNode* tree){
+	if(tree == NULL){
+		fprintf(stderr, "tree_isleaf(): bad input: tree is NULL\n");
+		return false;
+	}
+	return tree->left==NULL && tree->right==NULL;
+}
 
 
 

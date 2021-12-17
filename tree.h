@@ -16,3 +16,4 @@ void tree_printPreorder(TreeNode* tree, FILE* dst, char* (*dtos)(void*));
 void tree_printInorder(TreeNode* tree, FILE* dst, char* (*dtos)(void*));
 void tree_printPostorder(TreeNode* tree, FILE* dst, char* (*dtos)(void*));
 void tree_printTree(TreeNode* tree, FILE* dst, char* (*dtos)(void*));
+bool tree_isleaf(TreeNode* tree);
