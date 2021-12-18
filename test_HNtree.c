@@ -27,8 +27,10 @@ int main(){
         HNtree_printTree(hnt123, stdout);
 	
 	//test fprintHNT
-	printf("---TEST fprintHNT---\n");
+	printf("---TEST fprint---\n");
         fprintHNT(stdout, hnt123);
+	printf("\n");
+	fprintHNT_fr(stdout, hnt123);
 
 	//test compare
 	printf("---Test Compare---\n");
