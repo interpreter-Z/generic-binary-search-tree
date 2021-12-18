@@ -18,5 +18,8 @@ int main(){
 	printf("hn2 is: %s\n", str);
 	free(str);
 
+	free(hn1);
+	free(hn2);
+
 	return 0;
 }
