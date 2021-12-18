@@ -42,6 +42,11 @@ int main(){
 	printf("cmp %s %s ==> %d\n", str3, str1, cmpHNT(hnt3, hnt1));
 	printf("cmp %s %s ==> %d\n", str13, str2, cmpHNT(hnt13, hnt2));
 
+	tree_freeTree(hnt123);
+	free(str1);
+	free(str2);
+	free(str3);
+	free(str13);
 
 	return 0;
 }
