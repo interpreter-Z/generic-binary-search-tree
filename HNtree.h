@@ -1,5 +1,9 @@
 #include "tree.h"
+
+#ifndef HNT_INC
 #include "HuffNode/HuffNode.h"
+#define HNT_INC
+#endif
 
 //Interface
 TreeNode* HNtree_cons(int lb, long fr);

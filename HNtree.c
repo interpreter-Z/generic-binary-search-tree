@@ -32,16 +32,22 @@ int cmpHNT(void* hnt1, void* hnt2){
 	if(cmp1 != cmp2)
 		return cmp1 - cmp2;
 
-	//2. single-node tree is smaller tree
-	if     (tree_isleaf(tree1) && !tree_isleaf(tree2))
+	//2. if one leaf one not, single-node tree is smaller tree
+	else if(tree_isleaf(tree1) && !tree_isleaf(tree2))
 		return -1;
 	else if(!tree_isleaf(tree1) && tree_isleaf(tree2))
 		return 1;
 
-	//3. smaller root ASCII value (data->lb) is smaller tree
-	cmp1 = valOf(tree1).lb;
-	cmp2 = valOf(tree2).lb;
-	return cmp1 - cmp2;
+	//3. if both leaf, smaller root ASCII value (data->lb) is smaller tree
+	else if(tree_isleaf(tree1) && tree_isleaf(tree2)){
+		cmp1 = valOf(tree1).lb;
+		cmp2 = valOf(tree2).lb;
+		return cmp1 - cmp2;
+	}
+
+	//*4. if neither leaf, earlier created is smaller tree (implied in input order))
+	else
+		return 0;
 }
 
 // Combines 2 HNtrees into a single HNtree with a root holding them as L & R child
@@ -65,11 +71,11 @@ TreeNode* mergeHNT(TreeNode* hnt1, TreeNode* hnt2){
 	//merge tree:
 	TreeNode* root = HNtree_cons(lbr, frr);
 	//root's left children is the smaller tree
-	if( cmpHNT((void*)hnt1, (void*)hnt2) < 0 ){
+	if( cmpHNT((void*)hnt1, (void*)hnt2) <= 0 ){
 		root->left  = hnt1;
 		root->right = hnt2;
 	}
-	else{ //there should not be equivalent HNtrees
+	else{ //there should not be equivalent HNtrees; if there is, they are both non-leaf and inputed in creation order
 		root->left  = hnt2;
 		root->right = hnt1;
 	}
